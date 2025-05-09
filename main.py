@@ -1,94 +1,94 @@
 import streamlit as st
 
-# Fonction simulée pour tester sans clé API
+# Fonction simulée
 def ask_gpt(prompt):
-    return f"\n💬 **Réponse simulée :** Vous avez demandé : _{prompt}_\n"
+    return f"💬 **Réponse simulée :** {prompt}"
 
-# Configuration de la page
-st.set_page_config(page_title="EntreprendIA – Prototype IA pour Entrepreneurs", layout="wide")
+# Configuration pro-style
+st.set_page_config(page_title="EntreprendIA – Plateforme IA pour Entrepreneurs", layout="wide")
 
-# Bandeau principal
-st.markdown("""
-<div style='text-align: center;'>
+# Bandeau élégant avec effet visuel
+top_section = """
+<style>
+h1, h2, h3, h4 {font-family: 'Helvetica Neue', sans-serif;}
+body {background-color: #f4f6f8;}
+.main .block-container {padding: 2rem 4rem; background-color: #ffffff; border-radius: 16px; box-shadow: 0 6px 24px rgba(0,0,0,0.12);}
+.sidebar .sidebar-content {background-color: #ffffff; border-radius: 16px; padding: 1rem; box-shadow: 0 4px 12px rgba(0,0,0,0.1);}
+.stButton>button {background-color: #0073e6; color: white; border-radius: 8px; font-weight: bold; transition: background-color 0.3s;}
+.stButton>button:hover {background-color: #005bb5;}
+.stTabs [data-baseweb="tab"] {font-size: 1.1em; font-weight: 600;}
+</style>
+
+<div style='text-align: center; padding-bottom: 10px;'>
     <h1 style='font-size:3em;'>🚀 EntreprendIA</h1>
-    <h2 style='color: grey;'>Prototype IA pour un accompagnement entrepreneurial innovant</h2>
-    <p style='font-size:1.1em;'>Explorez les fonctionnalités en mode simulateur avant le déploiement complet. Bientôt, des conseils enrichis par des sources nationales et internationales, adaptés aux profils et secteurs.</p>
+    <h2 style='color: #444;'>Plateforme IA professionnelle pour entrepreneurs ambitieux</h2>
+    <p style='font-size:1.1em; max-width: 800px; margin: auto;'>Offrez à vos projets des recommandations stratégiques, financières et marketing basées sur les meilleures données nationales et internationales, avec une interface moderne et fluide.</p>
 </div>
 <hr>
-""", unsafe_allow_html=True)
+"""
 
-# Sidebar enrichie
-st.sidebar.title("🔧 Navigation & Améliorations")
-st.sidebar.info("💡 Passez en mode API pour des réponses réelles et connectées à OpenAI et à des bases sectorielles et nationales.")
+st.markdown(top_section, unsafe_allow_html=True)
+
+# Sidebar améliorée
+st.sidebar.title("🌟 Navigation rapide")
 st.sidebar.markdown("""
-**Améliorations prévues :**
-- 🔹 Historique des sessions & suivis
-- 🔹 Profils utilisateurs avec préférences
-- 🔹 Connexion à des bases nationales (INS, APII) et internationales (OECD, Eurostat)
-- 🔹 Moteur de recommandations IA inspiré de GrowthBar, Jasper AI
-- 🔹 Rapports téléchargeables en PDF/Excel
-- 🔹 Tableaux de bord interactifs et comparatifs sectoriels
-- 🔹 Génération automatisée de plans d’affaires détaillés par secteur
+**Modules inclus :**
+- Assistance IA
+- Génération d’idées
+- Analyse de marché
+- Géomarketing
+- Simulation financière
+- Plan d’affaires
+
+**À venir :**
+- Recommandations intelligentes
+- Benchmarks sectoriels
+- Rapports interactifs téléchargeables
+- Tableau de bord avec visualisations dynamiques
 """)
 
-st.sidebar.markdown("""
-**Feuille de route :**
-1️⃣ Connexion API sécurisée<br>
-2️⃣ Personnalisation par secteur et profil<br>
-3️⃣ Intégration de bases de données nationales et internationales<br>
-4️⃣ Module prédictif (machine learning, benchmarks)<br>
-5️⃣ Monétisation (abonnements, crédits, partenariats)
-""", unsafe_allow_html=True)
-
-# Onglets principaux
-st.markdown("### 🗂️ Modules disponibles")
-tabs = st.tabs(["🤖 Assistance", "💡 Idées", "📊 Analyse Marché", "🗺️ Géomarketing", "📈 Simulation financière", "📝 Plan d'affaire complet"])
+# Onglets professionnels
+tabs = st.tabs(["🤖 Assistance", "💡 Idées", "📊 Marché", "🗺️ Géomarketing", "📈 Finances", "📝 Plan d'affaires"])
 
 with tabs[0]:
-    st.subheader("Assistance entrepreneuriale personnalisée")
-    user_question = st.text_input("Posez votre question :", placeholder="Ex. Comment lancer mon activité artisanale ?")
-    if st.button("Obtenir une réponse", key="btn1") and user_question:
-        answer = ask_gpt(user_question)
-        st.success(answer)
+    st.header("🤖 Assistance personnalisée")
+    q1 = st.text_input("Votre question :", placeholder="Ex. Comment trouver des financements ?")
+    if st.button("Répondre", key="b1") and q1:
+        st.success(ask_gpt(q1))
 
 with tabs[1]:
-    st.subheader("Générateur d'idées innovantes")
-    secteur = st.text_input("Secteur d'intérêt :", placeholder="Ex. Économie circulaire")
-    if st.button("Générer une idée", key="btn2") and secteur:
-        ideas = ask_gpt(f"Idées pour le secteur : {secteur}")
-        st.success(ideas)
+    st.header("💡 Générateur d’idées innovantes")
+    secteur = st.text_input("Secteur ciblé :", placeholder="Ex. Tech durable")
+    if st.button("Générer", key="b2") and secteur:
+        st.success(ask_gpt(f"Idées innovantes dans le secteur : {secteur}"))
 
 with tabs[2]:
-    st.subheader("Analyse rapide du marché")
-    secteur_analyse = st.text_input("Secteur à analyser :", placeholder="Ex. Cosmétique bio")
-    if st.button("Lancer l'analyse", key="btn3") and secteur_analyse:
-        analysis = ask_gpt(f"Analyse marché enrichie par les sources locales et internationales pour : {secteur_analyse}")
-        st.success(analysis)
+    st.header("📊 Analyse de marché avancée")
+    secteur_analyse = st.text_input("Secteur à analyser :", placeholder="Ex. Mode éthique")
+    if st.button("Analyser", key="b3") and secteur_analyse:
+        st.success(ask_gpt(f"Analyse détaillée du marché pour : {secteur_analyse}"))
 
 with tabs[3]:
-    st.subheader("Géomarketing & zone de chalandise")
-    zone = st.text_input("Zone géographique (ville ou région) :", placeholder="Ex. Tunis, Sfax")
-    if st.button("Analyser la zone", key="btn4") and zone:
-        geo_analysis = ask_gpt(f"Analyse géomarketing avec données enrichies pour : {zone}")
-        st.success(geo_analysis)
+    st.header("🗺️ Analyse géomarketing détaillée")
+    zone = st.text_input("Zone géographique :", placeholder="Ex. Tunis, Sfax")
+    if st.button("Analyser zone", key="b4") and zone:
+        st.success(ask_gpt(f"Profil géomarketing pour : {zone}"))
 
 with tabs[4]:
-    st.subheader("Simulation financière")
-    projet = st.text_input("Type de projet :", placeholder="Ex. Café, start-up tech")
-    if st.button("Simuler les finances", key="btn5") and projet:
-        finance = ask_gpt(f"Simulation financière détaillée pour : {projet}")
-        st.success(finance)
+    st.header("📈 Simulation financière complète")
+    projet = st.text_input("Projet à simuler :", placeholder="Ex. Application mobile santé")
+    if st.button("Simuler", key="b5") and projet:
+        st.success(ask_gpt(f"Simulation financière complète pour : {projet}"))
 
 with tabs[5]:
-    st.subheader("Plan d'affaire complet")
-    projet_nom = st.text_input("Nom du projet :", placeholder="Ex. Mon Café Innovant")
-    if st.button("Générer le plan d'affaire", key="btn6") and projet_nom:
-        business_plan = ask_gpt(f"Génère un plan d'affaire structuré pour : {projet_nom} comprenant résumé exécutif, étude de marché, stratégie, prévisions financières, besoins d'investissement et indicateurs clés.")
-        st.success(business_plan)
+    st.header("📝 Génération de plan d’affaires professionnel")
+    projet_nom = st.text_input("Nom du projet :", placeholder="Ex. Café bio innovant")
+    if st.button("Créer plan d’affaires", key="b6") and projet_nom:
+        st.success(ask_gpt(f"Plan d’affaires structuré pour : {projet_nom} (résumé exécutif, marché, stratégie, finances, indicateurs clés, recommandations)"))
 
 st.markdown("""
 <hr>
-<div style='text-align: center; color: grey;'>
-    ⚠️ **Note :** Mode simulateur activé. Les réponses affichées sont fictives et servent à la démonstration. Pour débloquer les fonctionnalités avancées, connectez une clé API OpenAI et activez l'accès aux bases spécialisées et externes.
+<div style='text-align: center; color: #666;'>
+⚠️ **Mode simulateur actif :** Les résultats affichés sont fictifs et illustratifs, à usage de démonstration.
 </div>
 """, unsafe_allow_html=True)
