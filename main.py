@@ -5,23 +5,42 @@ def ask_gpt(prompt):
     return f"\n💬 **Réponse simulée :** Vous avez demandé : _{prompt}_\n"
 
 # Configuration de la page
-st.set_page_config(page_title="EntreprendIA – Mode Simulateur", layout="wide")
+st.set_page_config(page_title="EntreprendIA – Prototype IA pour Entrepreneurs", layout="wide")
 
-# Bandeau principal
+# Bandeau principal amélioré
 st.markdown("""
 <div style='text-align: center;'>
-    <h1>🚀 EntreprendIA – Agent IA pour Entrepreneurs</h1>
-    <h3 style='color: grey;'>Prototype interactif – Mode Simulateur</h3>
+    <h1 style='font-size:3em;'>🚀 EntreprendIA</h1>
+    <h2 style='color: grey;'>Prototype IA pour un accompagnement entrepreneurial innovant</h2>
+    <p style='font-size:1.1em;'>Explorez les fonctionnalités en mode simulateur avant le déploiement complet.</p>
 </div>
 <hr>
 """, unsafe_allow_html=True)
 
-# Sidebar
-st.sidebar.title("🔧 Navigation")
-st.sidebar.info("💡 Passez en mode API pour des réponses réelles.")
+# Sidebar enrichie
+st.sidebar.title("🔧 Navigation & Améliorations")
+st.sidebar.info("💡 Passez en mode API pour des réponses réelles et connectées à OpenAI.")
+st.sidebar.markdown("""
+**Améliorations prévues :**
+- 🔹 Historique des sessions & suivis
+- 🔹 Profils utilisateurs avec préférences
+- 🔹 Moteur de recommandations IA inspiré de GrowthBar, Jasper AI
+- 🔹 Rapports téléchargeables en PDF/Excel
+- 🔹 Tableaux de bord interactifs
+""")
 
-# Onglets organisés
-tabs = st.tabs(["🤖 Assistance", "💡 Idées", "📊 Analyse Marché", "🗺️ Géomarketing"])
+st.sidebar.markdown("""
+**Feuille de route :**
+1️⃣ Connexion API sécurisée<br>
+2️⃣ Personnalisation par secteur<br>
+3️⃣ Intégration de bases de données locales<br>
+4️⃣ Module prédictif (machine learning)<br>
+5️⃣ Monétisation (abonnements, crédits)
+""", unsafe_allow_html=True)
+
+# Onglets améliorés
+st.markdown("### 🗂️ Modules disponibles")
+tabs = st.tabs(["🤖 Assistance", "💡 Idées", "📊 Analyse Marché", "🗺️ Géomarketing", "📈 Simulation financière"])
 
 with tabs[0]:
     st.subheader("Assistance entrepreneuriale personnalisée")
@@ -51,9 +70,16 @@ with tabs[3]:
         geo_analysis = ask_gpt(f"Analyse géomarketing pour : {zone}")
         st.success(geo_analysis)
 
+with tabs[4]:
+    st.subheader("Simulation financière")
+    projet = st.text_input("Type de projet :", placeholder="Ex. Café, start-up tech")
+    if st.button("Simuler les finances", key="btn5") and projet:
+        finance = ask_gpt(f"Simulation financière pour : {projet}")
+        st.success(finance)
+
 st.markdown("""
 <hr>
 <div style='text-align: center; color: grey;'>
-    ⚠️ **Note :** Vous êtes actuellement en mode simulateur. Les réponses affichées sont fictives et destinées à la démonstration.
+    ⚠️ **Note :** Mode simulateur activé. Les réponses affichées sont fictives et servent à la démonstration. Pour débloquer les fonctionnalités avancées, connectez une clé API OpenAI.
 </div>
 """, unsafe_allow_html=True)
