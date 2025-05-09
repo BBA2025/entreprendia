@@ -1,3 +1,2 @@
 streamlit
 openai
-Renommage en requirements.txt et correction des dépendances
