@@ -1,14 +1,10 @@
 import streamlit as st
 
-# Fonction simulée
-def ask_gpt(prompt):
-    return f"💬 **Réponse simulée :** {prompt}"
+# --- CONFIGURATION PAGE ---
+st.set_page_config(page_title="EntreprendIA – Coach IA Entrepreneurial", layout="wide")
 
-# Configuration pro-style
-st.set_page_config(page_title="EntreprendIA – Plateforme IA pour Entrepreneurs", layout="wide")
-
-# Bandeau élégant avec effet visuel
-top_section = """
+# --- STYLE PERSONNALISÉ ---
+st.markdown("""
 <style>
 h1, h2, h3, h4 {font-family: 'Helvetica Neue', sans-serif;}
 body {background-color: #f4f6f8;}
@@ -16,79 +12,67 @@ body {background-color: #f4f6f8;}
 .sidebar .sidebar-content {background-color: #ffffff; border-radius: 16px; padding: 1rem; box-shadow: 0 4px 12px rgba(0,0,0,0.1);}
 .stButton>button {background-color: #0073e6; color: white; border-radius: 8px; font-weight: bold; transition: background-color 0.3s;}
 .stButton>button:hover {background-color: #005bb5;}
-.stTabs [data-baseweb="tab"] {font-size: 1.1em; font-weight: 600;}
+.stProgress > div > div > div {background-color: #0073e6;}
 </style>
+""", unsafe_allow_html=True)
 
-<div style='text-align: center; padding-bottom: 10px;'>
-    <h1 style='font-size:3em;'>🚀 EntreprendIA</h1>
-    <h2 style='color: #444;'>Plateforme IA professionnelle pour entrepreneurs ambitieux</h2>
-    <p style='font-size:1.1em; max-width: 800px; margin: auto;'>Offrez à vos projets des recommandations stratégiques, financières et marketing basées sur les meilleures données nationales et internationales, avec une interface moderne et fluide.</p>
+# --- HEADER ---
+st.markdown("""
+<div style='text-align: center;'>
+    <h1>🚀 EntreprendIA</h1>
+    <h2 style='color: #444;'>Le coach IA complet pour entrepreneurs ambitieux</h2>
+    <p>Avancez étape par étape pour concrétiser votre projet avec l’aide de l’intelligence artificielle.</p>
 </div>
 <hr>
-"""
+""", unsafe_allow_html=True)
 
-st.markdown(top_section, unsafe_allow_html=True)
+# --- SIDEBAR ---
+st.sidebar.title("🌟 Tableau de bord")
+progress = st.sidebar.progress(0)
+steps = ["Idée", "Analyse Marché", "Géomarketing", "Finances", "Plan d’Affaires", "Recommandations Finales"]
+completed_steps = st.sidebar.multiselect("✅ Étapes complétées :", steps)
 
-# Sidebar améliorée
-st.sidebar.title("🌟 Navigation rapide")
-st.sidebar.markdown("""
-**Modules inclus :**
-- Assistance IA
-- Génération d’idées
-- Analyse de marché
-- Géomarketing
-- Simulation financière
-- Plan d’affaires
+# Calculer la progression
+progress_value = len(completed_steps) / len(steps)
+progress.progress(progress_value)
 
-**À venir :**
-- Recommandations intelligentes
-- Benchmarks sectoriels
-- Rapports interactifs téléchargeables
-- Tableau de bord avec visualisations dynamiques
-""")
+st.sidebar.markdown("**Modules clés :**")
+st.sidebar.write("- Chatbot Assistance")
+st.sidebar.write("- Générateur de plan d’affaires")
+st.sidebar.write("- Recommandations stratégiques")
+st.sidebar.write("- Simulation financière (fictive)")
 
-# Onglets professionnels
-tabs = st.tabs(["🤖 Assistance", "💡 Idées", "📊 Marché", "🗺️ Géomarketing", "📈 Finances", "📝 Plan d'affaires"])
+# --- CHATBOT CENTRALISÉ ---
+st.header("🤖 Chatbot Assistance Entrepreneuriale")
+user_input = st.text_input("Posez votre question ou décrivez votre projet :", placeholder="Ex. Comment trouver des financements ?")
+if st.button("Obtenir une réponse IA"):
+    if user_input:
+        st.success(f"💬 **Réponse IA simulée :** Voici une réponse simulée à votre demande : _{user_input}_ (dans la vraie version, cette réponse sera enrichie par GPT-4 et des données réelles).")
+    else:
+        st.warning("Merci de saisir une question pour obtenir une réponse.")
 
-with tabs[0]:
-    st.header("🤖 Assistance personnalisée")
-    q1 = st.text_input("Votre question :", placeholder="Ex. Comment trouver des financements ?")
-    if st.button("Répondre", key="b1") and q1:
-        st.success(ask_gpt(q1))
+# --- MODULE PLAN D’AFFAIRES ---
+st.header("📝 Génération de Plan d’Affaires (simulé)")
+if st.button("Générer un exemple de plan d’affaires"):
+    st.info("✅ **Résumé Exécutif :** Présentation synthétique du projet, sa mission et ses objectifs.")
+    st.info("📊 **Analyse de Marché :** Taille du marché, clients cibles, concurrence identifiée.")
+    st.info("📈 **Stratégie :** Proposition de valeur unique, canaux marketing, partenariats.")
+    st.info("💰 **Prévisions Financières :** Estimations de revenus, coûts, marge brute, point mort.")
+    st.info("🔑 **Indicateurs Clés :** Objectifs chiffrés, jalons et métriques de succès.")
+    st.success("Un rapport structuré prêt à être exporté (fonctionnalité future) sera généré ici.")
 
-with tabs[1]:
-    st.header("💡 Générateur d’idées innovantes")
-    secteur = st.text_input("Secteur ciblé :", placeholder="Ex. Tech durable")
-    if st.button("Générer", key="b2") and secteur:
-        st.success(ask_gpt(f"Idées innovantes dans le secteur : {secteur}"))
+# --- MODULE RECOMMANDATIONS ---
+st.header("🎯 Recommandations Stratégiques Simulées")
+if st.button("Obtenir des recommandations clés"):
+    st.write("- Consolidez votre proposition de valeur avant de lancer des investissements majeurs.")
+    st.write("- Priorisez une analyse de la zone de chalandise pour vérifier la demande locale.")
+    st.write("- Formalisez vos hypothèses financières pour identifier vos besoins de financement.")
+    st.write("- Préparez un pitch deck synthétique pour présenter aux partenaires ou investisseurs.")
 
-with tabs[2]:
-    st.header("📊 Analyse de marché avancée")
-    secteur_analyse = st.text_input("Secteur à analyser :", placeholder="Ex. Mode éthique")
-    if st.button("Analyser", key="b3") and secteur_analyse:
-        st.success(ask_gpt(f"Analyse détaillée du marché pour : {secteur_analyse}"))
-
-with tabs[3]:
-    st.header("🗺️ Analyse géomarketing détaillée")
-    zone = st.text_input("Zone géographique :", placeholder="Ex. Tunis, Sfax")
-    if st.button("Analyser zone", key="b4") and zone:
-        st.success(ask_gpt(f"Profil géomarketing pour : {zone}"))
-
-with tabs[4]:
-    st.header("📈 Simulation financière complète")
-    projet = st.text_input("Projet à simuler :", placeholder="Ex. Application mobile santé")
-    if st.button("Simuler", key="b5") and projet:
-        st.success(ask_gpt(f"Simulation financière complète pour : {projet}"))
-
-with tabs[5]:
-    st.header("📝 Génération de plan d’affaires professionnel")
-    projet_nom = st.text_input("Nom du projet :", placeholder="Ex. Café bio innovant")
-    if st.button("Créer plan d’affaires", key="b6") and projet_nom:
-        st.success(ask_gpt(f"Plan d’affaires structuré pour : {projet_nom} (résumé exécutif, marché, stratégie, finances, indicateurs clés, recommandations)"))
-
+# --- MESSAGE EN BAS DE PAGE ---
 st.markdown("""
 <hr>
 <div style='text-align: center; color: #666;'>
-⚠️ **Mode simulateur actif :** Les résultats affichés sont fictifs et illustratifs, à usage de démonstration.
+⚠️ **Mode simulateur :** Les résultats affichés sont fictifs, à usage démonstratif uniquement.
 </div>
 """, unsafe_allow_html=True)
