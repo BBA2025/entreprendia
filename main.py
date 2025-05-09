@@ -17,6 +17,14 @@ st.markdown("""
 <hr>
 """, unsafe_allow_html=True)
 
+# Évaluation professionnelle et recommandations
+st.markdown("""
+### 🔍 Évaluation professionnelle d'EntreprendIA
+- **Stratégique :** EntreprendIA est bien positionné sur le créneau de l'accompagnement entrepreneurial, mais il gagnerait à formaliser ses partenariats avec des sources de données nationales (INS, APII) et internationales (OECD, Eurostat) pour renforcer sa crédibilité et sa valeur ajoutée.
+- **Opérationnel :** Il est recommandé de renforcer l'intégration API, d'améliorer l'interface utilisateur pour une expérience plus fluide et intuitive, et d'ajouter des modules prédictifs basés sur l'apprentissage automatique.
+- **Positionnement :** EntreprendIA pourrait se démarquer en s'inspirant d'outils comme GrowthBar, Jasper AI et des plateformes spécialisées sectorielles, en offrant des recommandations hyper-personnalisées, un moteur de génération de rapports stratégiques, des plans d'action clé en main et une capacité à anticiper les besoins des utilisateurs.
+""")
+
 # Sidebar enrichie
 st.sidebar.title("🔧 Navigation & Améliorations")
 st.sidebar.info("💡 Passez en mode API pour des réponses réelles et connectées à OpenAI et à des bases sectorielles et nationales.")
