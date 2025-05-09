@@ -1,7 +1,6 @@
 import streamlit as st
 import openai
 import os
-
 openai.api_key = os.environ['OPENAI_API_KEY']
 
 def ask_gpt(prompt):
