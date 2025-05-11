@@ -1,19 +1,19 @@
 import openai
 import streamlit as st
 
-# 🔐 Récupère la clé OpenRouter depuis secrets.toml
+# Utilisation de la clé OpenRouter depuis secrets.toml
 openai.api_key = st.secrets["OPENROUTER_API_KEY"]
 openai.api_base = "https://openrouter.ai/api/v1"
 
-def generer_reponse(message_utilisateur):
+def generer_reponse(message):
     try:
-        reponse = openai.ChatCompletion.create(
-            model="mistralai/mistral-7b-instruct",  # Tu peux tester aussi "openchat/openchat-3.5-1210"
+        completion = openai.ChatCompletion.create(
+            model="mistralai/mistral-7b-instruct",  # ou un autre modèle supporté
             messages=[
-                {"role": "system", "content": "Tu es un assistant IA pour entrepreneurs, clair, pratique et motivant."},
-                {"role": "user", "content": message_utilisateur}
+                {"role": "system", "content": "Tu es un coach IA pour entrepreneurs."},
+                {"role": "user", "content": message}
             ]
         )
-        return reponse["choices"][0]["message"]["content"]
+        return completion.choices[0].message["content"]
     except Exception as e:
         return f"❌ Erreur IA : {e}"
