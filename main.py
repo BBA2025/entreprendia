@@ -54,7 +54,8 @@ tabs = st.tabs([
 ])
 
 # --- CHATBOT ---
-with tabs[0]:
+with tabs[0]:from chatbot import generer_reponse
+
     st.header("💬 Chatbot IA")
     question = st.text_input("Votre question :", key="chatbot_input")
     if st.button("Envoyer", key="send_chatbot"):
@@ -63,6 +64,16 @@ with tabs[0]:
             st.success(f"💬 {reponse}")
         else:
             st.warning("Merci de saisir une question.")
+st.header("💬 Chatbot IA connecté à OpenRouter")
+
+question = st.text_input("Pose ta question ici :", placeholder="Ex. Comment lancer un commerce à Sfax ?")
+
+if st.button("Envoyer la question"):
+    if question:
+        reponse = generer_reponse(question)
+        st.success(reponse)
+    else:
+        st.warning("Merci d’écrire une question avant de cliquer.")
 
 # --- PLAN D’AFFAIRES ---
 with tabs[1]:
