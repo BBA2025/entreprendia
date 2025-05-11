@@ -77,3 +77,22 @@ st.markdown("""
 ⚠️ **Mode simulateur :** Les résultats affichés sont fictifs, à usage démonstratif uniquement.
 </div>
 """, unsafe_allow_html=True)
+# === Section de test pour intégrer un onglet chatbot simple ===
+st.markdown("---")
+st.subheader("🔬 Espace de test - Modules IA en onglets")
+
+onglets = st.tabs(["💬 Chatbot IA", "📊 Analyse Marché", "📈 Finances"])
+
+with onglets[0]:
+    st.header("💬 Chatbot IA")
+    question = st.text_input("Posez votre question ici :", key="chatbot_test")
+    if st.button("Envoyer", key="send_chatbot_test"):
+        st.success("💬 Réponse simulée : Merci pour votre question !")
+
+with onglets[1]:
+    st.header("📊 Analyse de marché")
+    st.write("Ce module affichera les données de marché pertinentes...")
+
+with onglets[2]:
+    st.header("📈 Simulation financière")
+    st.write("Module de simulation financière à venir.")
