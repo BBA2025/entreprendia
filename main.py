@@ -54,26 +54,22 @@ tabs = st.tabs([
 ])
 
 # --- CHATBOT ---
-with tabs[0]:from chatbot import generer_reponse
+from chatbot import generer_reponse
+import streamlit as st
 
-    st.header("💬 Chatbot IA")
-    question = st.text_input("Votre question :", key="chatbot_input")
-    if st.button("Envoyer", key="send_chatbot"):
-        if question:
-            reponse = generer_reponse(question)
-            st.success(f"💬 {reponse}")
-        else:
-            st.warning("Merci de saisir une question.")
-st.header("💬 Chatbot IA connecté à OpenRouter")
+st.set_page_config(page_title="EntreprendIA - Chatbot IA", layout="wide")
+st.title("🤖 EntreprendIA - Coach IA pour Entrepreneurs")
 
-question = st.text_input("Pose ta question ici :", placeholder="Ex. Comment lancer un commerce à Sfax ?")
+# --- Interface chatbot simple ---
+st.header("💬 Chatbot IA")
+user_input = st.text_input("Posez votre question ici :", placeholder="Ex. Comment financer un projet agricole ?")
 
-if st.button("Envoyer la question"):
-    if question:
-        reponse = generer_reponse(question)
+if st.button("Obtenir une réponse IA"):
+    if user_input:
+        reponse = generer_reponse(user_input)
         st.success(reponse)
     else:
-        st.warning("Merci d’écrire une question avant de cliquer.")
+        st.warning("Merci de poser une question.")
 
 # --- PLAN D’AFFAIRES ---
 with tabs[1]:
