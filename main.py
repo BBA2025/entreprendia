@@ -1,5 +1,8 @@
 from chatbot import generer_reponse
+from fpdf import FPDF
 import streamlit as st
+import tempfile
+import os
 
 # --- CONFIGURATION PAGE ---
 st.set_page_config(page_title="EntreprendIA – Coach IA Entrepreneurial", layout="wide")
@@ -29,70 +32,124 @@ st.markdown("""
 
 # --- SIDEBAR ---
 st.sidebar.title("🌟 Tableau de bord")
-progress = st.sidebar.progress(0)
 steps = ["Idée", "Analyse Marché", "Géomarketing", "Finances", "Plan d’Affaires", "Recommandations Finales"]
 completed_steps = st.sidebar.multiselect("✅ Étapes complétées :", steps)
+progress_value = len(completed_steps) / len(steps) if steps else 0
+st.sidebar.progress(progress_value)
 
-# Calculer la progression
-progress_value = len(completed_steps) / len(steps)
-progress.progress(progress_value)
-
-st.sidebar.markdown("**Modules clés :**")
-st.sidebar.write("- Chatbot Assistance")
+st.sidebar.markdown("**Modules disponibles :**")
+st.sidebar.write("- Chatbot intelligent")
 st.sidebar.write("- Générateur de plan d’affaires")
+st.sidebar.write("- Analyse de marché")
 st.sidebar.write("- Recommandations stratégiques")
-st.sidebar.write("- Simulation financière (fictive)")
+st.sidebar.write("- Simulation financière")
 
-# --- CHATBOT CENTRALISÉ ---
-st.header("🤖 Chatbot Assistance Entrepreneuriale")
-user_input = st.text_input("Posez votre question ou décrivez votre projet :", placeholder="Ex. Comment trouver des financements ?")
-if st.button("Obtenir une réponse IA"):
-    if user_input:
-        st.success(f"💬 **Réponse IA simulée :** Voici une réponse simulée à votre demande : _{user_input}_ (dans la vraie version, cette réponse sera enrichie par GPT-4 et des données réelles).")
-    else:
-        st.warning("Merci de saisir une question pour obtenir une réponse.")
+# --- ONGLET PRINCIPAUX ---
+tabs = st.tabs([
+    "💬 Chatbot IA",
+    "📝 Plan d'affaires",
+    "📊 Analyse Marché",
+    "🎯 Recommandations",
+    "📈 Finances"
+])
 
-# --- MODULE PLAN D’AFFAIRES ---
-st.header("📝 Génération de Plan d’Affaires (simulé)")
-if st.button("Générer un exemple de plan d’affaires"):
-    st.info("✅ **Résumé Exécutif :** Présentation synthétique du projet, sa mission et ses objectifs.")
-    st.info("📊 **Analyse de Marché :** Taille du marché, clients cibles, concurrence identifiée.")
-    st.info("📈 **Stratégie :** Proposition de valeur unique, canaux marketing, partenariats.")
-    st.info("💰 **Prévisions Financières :** Estimations de revenus, coûts, marge brute, point mort.")
-    st.info("🔑 **Indicateurs Clés :** Objectifs chiffrés, jalons et métriques de succès.")
-    st.success("Un rapport structuré prêt à être exporté (fonctionnalité future) sera généré ici.")
+# --- CHATBOT ---
+with tabs[0]:
+    st.header("💬 Chatbot IA")
+    question = st.text_input("Votre question :", key="chatbot_input")
+    if st.button("Envoyer", key="send_chatbot"):
+        if question:
+            reponse = generer_reponse(question)
+            st.success(f"💬 {reponse}")
+        else:
+            st.warning("Merci de saisir une question.")
 
-# --- MODULE RECOMMANDATIONS ---
-st.header("🎯 Recommandations Stratégiques Simulées")
-if st.button("Obtenir des recommandations clés"):
-    st.write("- Consolidez votre proposition de valeur avant de lancer des investissements majeurs.")
-    st.write("- Priorisez une analyse de la zone de chalandise pour vérifier la demande locale.")
-    st.write("- Formalisez vos hypothèses financières pour identifier vos besoins de financement.")
-    st.write("- Préparez un pitch deck synthétique pour présenter aux partenaires ou investisseurs.")
+# --- PLAN D’AFFAIRES ---
+with tabs[1]:
+    st.header("📝 Plan d’affaires simulé")
+    if st.button("Générer un exemple"):
+        st.info("✅ **Résumé Exécutif** : Mission et objectifs.")
+        st.info("📊 **Analyse de Marché** : Taille, clientèle, concurrence.")
+        st.info("📈 **Stratégie** : Positionnement, canaux, modèle économique.")
+        st.info("💰 **Prévisions Financières** : Revenus, coûts, marge, rentabilité.")
+        st.info("🔑 **Indicateurs Clés** : Objectifs chiffrés, jalons.")
+        st.success("📄 Rapport généré avec succès ! (version simulée)")
 
-# --- MESSAGE EN BAS DE PAGE ---
+# --- ANALYSE DE MARCHÉ ---
+with tabs[2]:
+    st.header("📊 Analyse de Marché")
+    secteur = st.selectbox("Quel est votre secteur ?", ["Artisanat", "Agroalimentaire", "Tech", "Services", "Éducation"])
+    region = st.text_input("Dans quelle région êtes-vous situé ?", placeholder="Ex. Tunis, Sfax, Gafsa")
+    if st.button("Analyser le marché"):
+        if secteur and region:
+            st.success(f"📍 Analyse pour le secteur **{secteur}** à **{region}** :")
+            st.write(f"""
+- 💡 Demande en hausse.
+- 📈 Opportunités : circuits courts, e-commerce, coopératives.
+- 🚧 Risques : concurrence, fiscalité instable, accès au financement.
+- ✅ Conseil : démarrez simple, testez le marché, adaptez-vous vite.
+            """)
+        else:
+            st.warning("Veuillez indiquer secteur et région.")
+
+# --- RECOMMANDATIONS STRATÉGIQUES ---
+with tabs[3]:
+    st.header("🎯 Recommandations stratégiques")
+    if st.button("Obtenir des recommandations clés"):
+        st.write("- Consolidez votre proposition de valeur.")
+        st.write("- Étudiez votre zone de chalandise.")
+        st.write("- Formalisez vos hypothèses financières.")
+        st.write("- Préparez un pitch clair pour investisseurs.")
+
+# --- FINANCES ---
+with tabs[4]:
+    st.header("📈 Simulation financière simplifiée")
+
+    col1, col2 = st.columns(2)
+    with col1:
+        revenus_mensuels = st.number_input("💰 Revenus mensuels estimés (TND)", min_value=0, step=100)
+        couts_fixes = st.number_input("🏠 Coûts fixes mensuels", min_value=0, step=50)
+
+    with col2:
+        couts_variables = st.number_input("🛒 Coûts variables mensuels", min_value=0, step=50)
+        quantite_vendue = st.number_input("📦 Quantité vendue par mois", min_value=1, step=1)
+
+    if st.button("Calculer la rentabilité"):
+        cout_total = couts_fixes + couts_variables
+        resultat_net = revenus_mensuels - cout_total
+        cout_unitaire = cout_total / quantite_vendue if quantite_vendue > 0 else 0
+        seuil_rentabilite = couts_fixes / ((revenus_mensuels / quantite_vendue) - cout_unitaire) if revenus_mensuels > cout_total else 0
+
+        st.subheader("🔍 Résultats")
+        st.write(f"💼 **Résultat net mensuel :** {resultat_net:,.2f} TND")
+        st.write(f"📌 **Seuil de rentabilité :** {seuil_rentabilite:.0f} unités" if seuil_rentabilite > 0 else "⚠️ Seuil non calculable.")
+
+        # ✅ Export PDF
+        if st.button("📤 Exporter les résultats en PDF"):
+            pdf = FPDF()
+            pdf.add_page()
+            pdf.set_font("Arial", "B", 14)
+            pdf.cell(200, 10, "Simulation financière - EntreprendIA", ln=True, align="C")
+            pdf.set_font("Arial", size=12)
+            pdf.ln(10)
+            pdf.cell(0, 10, f"Revenus mensuels : {revenus_mensuels} TND", ln=True)
+            pdf.cell(0, 10, f"Coûts fixes : {couts_fixes} TND", ln=True)
+            pdf.cell(0, 10, f"Coûts variables : {couts_variables} TND", ln=True)
+            pdf.cell(0, 10, f"Quantité vendue : {quantite_vendue}", ln=True)
+            pdf.cell(0, 10, f"Résultat net : {resultat_net:.2f} TND", ln=True)
+            if seuil_rentabilite > 0:
+                pdf.cell(0, 10, f"Seuil de rentabilité : {seuil_rentabilite:.0f} unités", ln=True)
+
+            with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp_file:
+                pdf.output(tmp_file.name)
+                with open(tmp_file.name, "rb") as f:
+                    st.download_button("📥 Télécharger le PDF", f, file_name="simulation_financiere.pdf")
+                os.unlink(tmp_file.name)
+
+# --- FOOTER ---
 st.markdown("""
 <hr>
 <div style='text-align: center; color: #666;'>
-⚠️ **Mode simulateur :** Les résultats affichés sont fictifs, à usage démonstratif uniquement.
+⚠️ **Mode simulateur actif** – Les résultats sont fictifs pour la démonstration.
 </div>
 """, unsafe_allow_html=True)
-# === Section de test pour intégrer un onglet chatbot simple ===
-st.markdown("---")
-st.subheader("🔬 Espace de test - Modules IA en onglets")
-
-onglets = st.tabs(["💬 Chatbot IA", "📊 Analyse Marché", "📈 Finances"])
-
-with onglets[0]:
-    st.header("💬 Chatbot IA")
-    question = st.text_input("Posez votre question ici :", key="chatbot_test")
-    if st.button("Envoyer", key="send_chatbot_test"):
-        st.success("💬 Réponse simulée : Merci pour votre question !")
-
-with onglets[1]:
-    st.header("📊 Analyse de marché")
-    st.write("Ce module affichera les données de marché pertinentes...")
-
-with onglets[2]:
-    st.header("📈 Simulation financière")
-    st.write("Module de simulation financière à venir.")
