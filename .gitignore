@@ -1,0 +1,11 @@
+# Empêche le suivi du fichier contenant ta clé API
+.streamlit/secrets.toml
+
+# Cache les fichiers temporaires
+__pycache__/
+*.pyc
+*.pyo
+
+# Cache de Streamlit
+.streamlit/config.toml
+.streamlit/credentials.toml
