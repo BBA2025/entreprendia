@@ -1,3 +1,4 @@
+from chatbot import generer_reponse
 import streamlit as st
 
 # --- CONFIGURATION PAGE ---
